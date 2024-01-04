@@ -507,7 +507,9 @@ function submitForm() {
     // Convert FormData to a plain object
     const formDataObject = {};
     formData.forEach((value, key) => {
-        formDataObject[key] = value;
+        // Remove the "data[]" prefix from the key
+        const cleanedKey = key.replace(/^data\[/, '').replace(/\]$/, '');
+        formDataObject[cleanedKey] = value;
     });
 
     // Log the formDataObject for debugging
