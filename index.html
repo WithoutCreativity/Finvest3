@@ -514,6 +514,57 @@
             reviews[review].style.display = "block";
         }
 
+        document.addEventListener('DOMContentLoaded', function () {
+    // Add an event listener to the form submission
+    document.getElementById('sheetdb-form').addEventListener('submit', function (event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Call the function to submit the form data to Cloudflare Worker
+        submitForm();
+    });
+});
+
+function submitForm() {
+    // Set submission date and time
+    const currentDate = new Date();
+    document.getElementById('submission-date').value = currentDate.toISOString().split('T')[0];
+    document.getElementById('submission-time').value = currentDate.toISOString().split('T')[1].split('.')[0];
+
+    // Get form data
+    const formData = new FormData(document.getElementById('sheetdb-form'));
+
+    // Convert FormData to a plain object
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+        // Remove the "data[]" prefix from the key
+        const cleanedKey = key.replace(/^data\[/, '').replace(/\]$/, '');
+        formDataObject[cleanedKey] = value;
+    });
+
+    // Log the formDataObject for debugging
+    console.log('formDataObject:', formDataObject);
+
+    // Call Cloudflare Worker to make the POST request
+    fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formDataObject),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response as needed
+        console.log(data);
+        // Optionally, redirect to a success page or perform other actions
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Handle the error, display a message, or perform other actions
+    });
+}
+
 
         // Get the child div by its id
         var childDiv1 = document.getElementById('text1');
@@ -536,21 +587,6 @@
         // Set the top position of the boxtext element to be the same as boxunder
         document.getElementById('boxtextover').style.top = boxunderTop + 'px';
 
-        // Event listener for chnage in "form", upload to db google
-        var form = document.getElementById('sheetdb-form');
-        form.addEventListener("submit", e => {
-            e.preventDefault();
-            fetch(form.action, {
-                method: "POST",
-                body: new FormData(document.getElementById("sheetdb-form")),
-            }).then(
-                response => response.json()
-            ).then((html) => {
-                // you can put any JS code here
-                window.open('page2.html', '_blank');
-
-            });
-        });
 
         function scrollToBox10() {
             var box10 = document.getElementById('form');
