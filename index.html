@@ -481,43 +481,17 @@
             </table>
         </div>
     </div>
+    <div id="apiKeyDisplay"></div>
 
     <script>
-        async function getApiKey() {
-    try {
-        const response = await fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev');
-        const data = await response.json();
-
-        if (response.ok) {
-            const apiKey = data.apiKey;
-            // Insert the API key into the form's action attribute
-            document.getElementById('sheetdb-form').action = apiKey;
-        } else {
-            console.error('Error:', data);
-        }
-    } catch (error) {
-        console.error('Fetch error:', error);
-    }
-}
-
-// Add event listener to the form
-var form = document.getElementById('sheetdb-form');
-form.addEventListener("submit", e => {
-    e.preventDefault();
-
-    // Call getApiKey before submitting the form
-    getApiKey().then(() => {
-        fetch(form.action, {
-            method: "POST",
-            body: new FormData(document.getElementById("sheetdb-form")),
-        }).then(
-            response => response.json()
-        ).then((html) => {
-            // you can put any JS code here
-            window.open('page2.html', '_blank');
-        });
-    });
-});
+       // Fetch API_KEY_FORMUPLOAD from Cloudflare Worker
+        fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/')
+            .then(response => response.json())
+            .then(data => {
+                // Display the API key on the webpage
+                document.getElementById('apiKeyDisplay').innerText = `API Key: ${data.apiKey}`;
+            })
+            .catch(error => console.error('Error fetching API key:', error));
 
         // Get the child div by its id
         var childDiv1 = document.getElementById('text1');
