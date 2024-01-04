@@ -541,10 +541,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Get the child div by its id
-    var childDiv1 = document.getElementById('text1');
-    var childDiv2 = document.getElementById('text2');
-    var childDiv3 = document.getElementById('text3');
+var childDiv1 = document.getElementById('text1');
+var childDiv2 = document.getElementById('text2');
+var childDiv3 = document.getElementById('text3');
 
+// Check if the elements exist before accessing their computed style
+if (childDiv1 && childDiv2 && childDiv3) {
     // Get the computed height of the child div
     var childHeight1 = window.getComputedStyle(childDiv1).height;
     var childHeight2 = window.getComputedStyle(childDiv2).height;
@@ -554,6 +556,9 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('DivText1').style.height = childHeight1;
     document.getElementById('DivText2').style.height = childHeight2;
     document.getElementById('DivText3').style.height = childHeight3;
+} else {
+    console.error('One or more child elements not found.');
+}
 
     // Get the top position of the boxunder element
     var boxunderTop = document.getElementById('boxundertext').getBoundingClientRect().top;
