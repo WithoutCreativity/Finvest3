@@ -484,73 +484,67 @@
     <div id="apiKeyDisplay"></div>
 
     <script>
-        function onResize() {
-    const resizeElement = document.getElementById('resize-element');
-    console.log('resizeElement:', resizeElement); // Add this line
-    if (resizeElement && resizeElement.classList) {
-        // Your resize logic here
-        console.log('Resized');
-    }
-}
 
         function submitForm() {
-        // Set submission date and time
-        const currentDate = new Date();
-        document.getElementById('submission-date').value = currentDate.toISOString().split('T')[0];
-        document.getElementById('submission-time').value = currentDate.toISOString().split('T')[1].split('.')[0];
+    // Set submission date and time
+    const currentDate = new Date();
+    document.getElementById('submission-date').value = currentDate.toISOString().split('T')[0];
+    document.getElementById('submission-time').value = currentDate.toISOString().split('T')[1].split('.')[0];
 
-        // Get form data
-        const formData = new FormData(document.getElementById('sheetdb-form'));
+    // Get form data
+    const formData = new FormData(document.getElementById('sheetdb-form'));
 
-        // Call Cloudflare Worker to make the POST request
-        fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Object.fromEntries(formData)),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response as needed
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+    // Call Cloudflare Worker to make the POST request
+    fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle the response as needed
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
+// Wait for the DOM to be fully loaded before running additional code
+document.addEventListener('DOMContentLoaded', function () {
+    // Get the child div by its id
+    var childDiv1 = document.getElementById('text1');
+    var childDiv2 = document.getElementById('text2');
+    var childDiv3 = document.getElementById('text3');
 
-        // Get the child div by its id
-        var childDiv1 = document.getElementById('text1');
-        var childDiv2 = document.getElementById('text2');
-        var childDiv3 = document.getElementById('text3');
+    // Get the computed height of the child div
+    var childHeight1 = window.getComputedStyle(childDiv1).height;
+    var childHeight2 = window.getComputedStyle(childDiv2).height;
+    var childHeight3 = window.getComputedStyle(childDiv3).height;
 
-        // Get the computed height of the child div
-        var childHeight1 = window.getComputedStyle(childDiv1).height;
-        var childHeight2 = window.getComputedStyle(childDiv2).height;
-        var childHeight3 = window.getComputedStyle(childDiv3).height;
+    // Set the height of the parent div (DivText1) to be the same as the height of its child div
+    document.getElementById('DivText1').style.height = childHeight1;
+    document.getElementById('DivText2').style.height = childHeight2;
+    document.getElementById('DivText3').style.height = childHeight3;
 
-        // Set the height of the parent div (DivText1) to be the same as the height of its child div
-        document.getElementById('DivText1').style.height = childHeight1;
-        document.getElementById('DivText2').style.height = childHeight2;
-        document.getElementById('DivText3').style.height = childHeight3;
+    // Get the top position of the boxunder element
+    var boxunderTop = document.getElementById('boxundertext').getBoundingClientRect().top;
 
-        // Get the top position of the boxunder element
-        var boxunderTop = document.getElementById('boxundertext').getBoundingClientRect().top;
+    // Set the top position of the boxtext element to be the same as boxunder
+    document.getElementById('boxtextover').style.top = boxunderTop + 'px';
 
-        // Set the top position of the boxtext element to be the same as boxunder
-        document.getElementById('boxtextover').style.top = boxunderTop + 'px';
+    function scrollToBox10() {
+        var box10 = document.getElementById('form');
 
-        function scrollToBox10() {
-            var box10 = document.getElementById('form');
-
-            // Check if the element exists
-            if (box10) {
-                // Scroll to the box10 element
-                box10.scrollIntoView({ behavior: 'smooth' });
-            }
+        // Check if the element exists
+        if (box10) {
+            // Scroll to the box10 element
+            box10.scrollIntoView({ behavior: 'smooth' });
         }
+    }
+});
     </script>
 </body>
 </html>
