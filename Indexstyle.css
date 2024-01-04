@@ -41,12 +41,12 @@ main {
     border-bottom-left-radius: 2em;
 }
 
-#image2 {
+#image2, #image4 {
     border-top-right-radius: 2em;
     border-bottom-right-radius: 2em;
 }
 
-#Image1, #image2, #image3 {
+#Image1, #image2, #image3, #image4 {
     width: 95%;
     /* Mobile default width */
 }
@@ -175,6 +175,9 @@ main {
     border-radius: 0.5em;
     color: white;
     background-color: rgba(37, 150, 190, 1);
+}
+
+#form {
 }
 
 .form-field {
