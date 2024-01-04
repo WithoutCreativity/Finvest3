@@ -504,13 +504,19 @@ function submitForm() {
     // Get form data
     const formData = new FormData(document.getElementById('sheetdb-form'));
 
+    // Convert FormData to a plain object
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+        formDataObject[key] = value;
+    });
+
     // Call Cloudflare Worker to make the POST request
     fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify(formDataObject),
     })
     .then(response => response.json())
     .then(data => {
@@ -523,7 +529,6 @@ function submitForm() {
         // Handle the error, display a message, or perform other actions
     });
 }
-
 function onResize() {
     const resizeElement = document.getElementById('resize-element');
     if (resizeElement && resizeElement.classList) {
