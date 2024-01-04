@@ -484,6 +484,15 @@
     <div id="apiKeyDisplay"></div>
 
     <script>
+        function onResize() {
+    const resizeElement = document.getElementById('resize-element');
+    console.log('resizeElement:', resizeElement); // Add this line
+    if (resizeElement && resizeElement.classList) {
+        // Your resize logic here
+        console.log('Resized');
+    }
+}
+
         function submitForm() {
         // Set submission date and time
         const currentDate = new Date();
