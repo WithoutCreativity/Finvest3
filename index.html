@@ -487,13 +487,13 @@
         var form = document.getElementById('sheetdb-form');
 
         // Fetch API key from Cloudflare Worker
-        fetch('https://your-worker-subdomain.your-account.workers.dev')
+        fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/')
             .then(response => response.headers.get('API-Key'))
             .then(apiKey => {
                 // Set up form submission
                 form.addEventListener("submit", e => {
                     e.preventDefault();
-                    fetch('https://your-worker-subdomain.your-account.workers.dev', {
+                    fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
                         method: "POST",
                         headers: { 'API-Key': apiKey },
                         body: new FormData(document.getElementById("sheetdb-form")),
