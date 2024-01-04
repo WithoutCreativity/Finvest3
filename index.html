@@ -512,8 +512,34 @@
     });
 }
 
-// Wait for the DOM to be fully loaded before running additional code
+function onResize() {
+    const resizeElement = document.getElementById('resize-element');
+    if (resizeElement && resizeElement.classList) {
+        // Your resize logic here
+        console.log('Resized');
+    }
+}
+
+function setupMobileNav() {
+    const mobileNavElement = document.getElementById('mobile-nav');
+    if (mobileNavElement && mobileNavElement.classList) {
+        // Your mobile nav setup logic here
+        console.log('Mobile Nav Setup');
+    }
+}
+
+// Wrap the event listeners in DOMContentLoaded to ensure the elements are available
 document.addEventListener('DOMContentLoaded', function () {
+    const resizeElement = document.getElementById('resize-element');
+    if (resizeElement) {
+        window.addEventListener('resize', onResize);
+    }
+
+    const mobileNavElement = document.getElementById('mobile-nav');
+    if (mobileNavElement) {
+        setupMobileNav();
+    }
+
     // Get the child div by its id
     var childDiv1 = document.getElementById('text1');
     var childDiv2 = document.getElementById('text2');
