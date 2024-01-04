@@ -510,6 +510,9 @@ function submitForm() {
         formDataObject[key] = value;
     });
 
+    // Log the formDataObject for debugging
+    console.log('formDataObject:', formDataObject);
+
     // Call Cloudflare Worker to make the POST request
     fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
         method: 'POST',
