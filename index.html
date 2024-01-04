@@ -484,14 +484,32 @@
     <div id="apiKeyDisplay"></div>
 
     <script>
-       // Fetch API_KEY_FORMUPLOAD from Cloudflare Worker
+
+       var form = document.getElementById('sheetdb-form');
+
+        // Fetch API_KEY_FORMUPLOAD from Cloudflare Worker
         fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/')
             .then(response => response.json())
             .then(data => {
-                // Display the API key on the webpage
-                document.getElementById('apiKeyDisplay').innerText = `API Key: ${data.apiKey}`;
+                // Set the action attribute of the form to the retrieved API key
+                form.action = data.apiKey;
+
+                // Add event listener for form submission
+                form.addEventListener("submit", e => {
+                    e.preventDefault();
+                    fetch(form.action, {
+                        method: "POST",
+                        body: new FormData(document.getElementById("sheetdb-form")),
+                    }).then(
+                        response => response.json()
+                    ).then((html) => {
+                        // you can put any JS code here
+                        window.open('page2.html', '_blank');
+                    });
+                });
             })
             .catch(error => console.error('Error fetching API key:', error));
+ 
 
         // Get the child div by its id
         var childDiv1 = document.getElementById('text1');
