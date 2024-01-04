@@ -484,43 +484,48 @@
 
     <script>
         var form = document.getElementById('sheetdb-form');
-      form.addEventListener("submit", e => {
-          e.preventDefault();
+  form.addEventListener("submit", e => {
+      e.preventDefault();
 
-          // Initialize Workers KV namespace
-          const kvNamespace = 'FORMUPLOADKV';
-          const apiKeyKey = 'API_KEY_FORMUPLOAD';
-          const kv = new WorkersKV(kvNamespace);
+      // Initialize Workers KV namespace
+      const kvNamespace = 'FORMUPLOADKV';
+      const apiKeyKey = 'API_KEY_FORMUPLOAD';
+      const kv = new WorkersKV(kvNamespace);
 
-          // Retrieve the URL from Workers KV
-          kv.get(apiKeyKey).then(url => {
-              if (url) {
-                  // Set the action attribute of the form to the retrieved URL
-                  form.action = url;
+      // Retrieve the URL from Workers KV
+      kv.get(apiKeyKey).then(url => {
+          if (url) {
+              // Set the action attribute of the form to the retrieved URL
+              form.action = url;
 
-                  // Set the API key in the headers
-                  const headers = new Headers();
-                  headers.append('Authorization', 'Bearer ' + apiKey);
+              console.log('Form action set to:', url);
 
-                  // Make the fetch request with the API key in the headers
-                  fetch(form.action, {
-                      method: "POST",
-                      headers: headers,
-                      body: new FormData(document.getElementById("sheetdb-form")),
-                  }).then(
-                      response => response.json()
-                  ).then((html) => {
-                      // Handle the response or redirect to another page
-                      window.open('page2.html', '_blank');
-                  });
-              } else {
-                  // Handle the case where URL is not found
-                  console.error('URL not found in Workers KV for API_KEY_FORMUPLOAD');
-              }
-          }).catch(error => {
-              console.error('Error retrieving URL:', error);
-          });
+              // Set the API key in the headers
+              const headers = new Headers();
+              headers.append('Authorization', 'Bearer ' + apiKey);
+
+              // Make the fetch request with the API key in the headers
+              fetch(form.action, {
+                  method: "POST",
+                  headers: headers,
+                  body: new FormData(document.getElementById("sheetdb-form")),
+              }).then(
+                  response => response.json()
+              ).then((html) => {
+                  // Handle the response or redirect to another page
+                  console.log('Form submitted successfully:', html);
+                  window.open('page2.html', '_blank');
+              }).catch(error => {
+                  console.error('Error submitting form:', error);
+              });
+          } else {
+              // Handle the case where URL is not found
+              console.error('URL not found in Workers KV for API_KEY_FORMUPLOAD');
+          }
+      }).catch(error => {
+          console.error('Error retrieving URL:', error);
       });
+  });
 
         // Get the child div by its id
         var childDiv1 = document.getElementById('text1');
