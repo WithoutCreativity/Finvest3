@@ -484,28 +484,32 @@
     <div id="apiKeyDisplay"></div>
 
     <script>
-        var form = document.getElementById('sheetdb-form');
+        function submitForm() {
+        // Set submission date and time
+        const currentDate = new Date();
+        document.getElementById('submission-date').value = currentDate.toISOString().split('T')[0];
+        document.getElementById('submission-time').value = currentDate.toISOString().split('T')[1].split('.')[0];
 
-        // Fetch API key from Cloudflare Worker
-        fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/')
-            .then(response => response.headers.get('API-Key'))
-            .then(apiKey => {
-                // Set up form submission
-                form.addEventListener("submit", e => {
-                    e.preventDefault();
-                    fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
-                        method: "POST",
-                        headers: { 'API-Key': apiKey },
-                        body: new FormData(document.getElementById("sheetdb-form")),
-                    }).then(
-                        response => response.json()
-                    ).then((html) => {
-                        // Handle the response as needed
-                        window.open('page2.html', '_blank');
-                    });
-                });
-            })
-            .catch(error => console.error('Error fetching API key:', error));
+        // Get form data
+        const formData = new FormData(document.getElementById('sheetdb-form'));
+
+        // Call Cloudflare Worker to make the POST request
+        fetch('/submit-form', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response as needed
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
 
         // Get the child div by its id
