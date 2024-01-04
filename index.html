@@ -494,7 +494,7 @@
         const formData = new FormData(document.getElementById('sheetdb-form'));
 
         // Call Cloudflare Worker to make the POST request
-        fetch('/submit-form', {
+        fetch('https://worker-square-breeze-d46e.jakubkalousek.workers.dev/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
