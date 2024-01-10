@@ -642,14 +642,16 @@ function submitForm() {
         // Handle the response as needed
         console.log(data);
         
-        // Optionally, redirect to a success page or perform other actions
+        // Optionally, display a success popup
+        displaySuccessPopup();
 
         // Clear form fields
         clearFormFields();
     })
     .catch(error => {
         console.error('Error:', error);
-        // Handle the error, display a message, or perform other actions
+        // Handle the error, display an error popup, or perform other actions
+        displayErrorPopup();
     });
 }
 
@@ -659,6 +661,16 @@ function clearFormFields() {
 
     // Reset the form
     form.reset();
+}
+
+function displaySuccessPopup() {
+    // Replace with code to display a success popup
+    alert('Form submitted successfully!');
+}
+
+function displayErrorPopup() {
+    // Replace with code to display an error popup
+    alert('Error submitting the form. Please try again.');
 }
 
 // Slider
