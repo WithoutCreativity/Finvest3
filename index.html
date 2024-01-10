@@ -644,35 +644,13 @@ function submitForm() {
         
         // Optionally, redirect to a success page or perform other actions
 
-        // Show success popup
-        showSuccessPopup();
-
         // Clear form fields
         clearFormFields();
     })
     .catch(error => {
         console.error('Error:', error);
         // Handle the error, display a message, or perform other actions
-
-        // Show error popup
-        showErrorPopup();
     });
-}
-
-function showSuccessPopup() {
-    // Display a success message using a custom div
-    const successPopup = document.getElementById('success-popup');
-    successPopup.style.display = 'block';
-
-    // Optionally, you can hide the success message after a few seconds
-    setTimeout(() => {
-        successPopup.style.display = 'none';
-    }, 3000); // Adjust the timeout as needed
-}
-
-function showErrorPopup() {
-    // Display an error message using the built-in alert function
-    alert('An error occurred. Please try again later.');
 }
 
 function clearFormFields() {
