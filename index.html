@@ -641,12 +641,24 @@ function submitForm() {
     .then(data => {
         // Handle the response as needed
         console.log(data);
+        
         // Optionally, redirect to a success page or perform other actions
+
+        // Clear form fields
+        clearFormFields();
     })
     .catch(error => {
         console.error('Error:', error);
         // Handle the error, display a message, or perform other actions
     });
+}
+
+function clearFormFields() {
+    // Replace 'sheetdb-form' with the actual ID of your form
+    const form = document.getElementById('sheetdb-form');
+
+    // Reset the form
+    form.reset();
 }
 
 // Slider
